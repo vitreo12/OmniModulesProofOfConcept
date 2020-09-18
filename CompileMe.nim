@@ -34,33 +34,3 @@ use Something:
     
 use SomethingElse:
     something as something2
-
-#use Something:
-    #One as One1
-    #hello as hello1
-    #[ 
-import Something as Something_module
-
-type One1 = Something_module.One
-
-template hello1() : untyped =
-    Something_module.hello()
-
-#use SomethingElse:
-    #One as One2
-    #hello as hello2
-import SomethingElse as SomethingElse_module
-
-type One2 = SomethingElse_module.One
-
-template hello2() : untyped =
-    SomethingElse_module.hello()
-
-let a = One1()
-let b = One2()
-
-a.something()
-b.something()
-
-hello1()
-hello2() ]#
