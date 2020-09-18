@@ -1,10 +1,11 @@
 #use Something:
     #One as One1
     #Two as Two1
-    #Three as Three1   #equivalent to Three as Three1
+    #Three as Three1
     #hello as hello1
     #Three.hello as helloThree1
     #something as something1
+    #Two.something as somethingThree1
 
 import Something as Something_module
 
@@ -31,11 +32,14 @@ template hello1() : untyped =
 template helloThree1() : untyped =
     Something_module.Three_module.Three_hello()
 
-template something1(a : One1) : untyped =
+template something1(a : Something_module.One_export) : untyped =
     Something_module.Something_something(a)
 
-template something1(a : Two1) : untyped =
+template something1(a : Something_module.Two_export) : untyped =
     Something_module.Something_something(a)
+
+template somethingThree1(a : Something_module.Three_export) : untyped =
+    Something_module.Two_something(a)
 
 #use SomethingElse:
     #One as One2
@@ -44,6 +48,7 @@ template something1(a : Two1) : untyped =
     #hello as hello2
     #Three.hello as helloThree2
     #something as something2
+    #Two.something as somethingThree2
 
 import SomethingElse as SomethingElse_module
 
@@ -70,11 +75,14 @@ template hello2() : untyped =
 template helloThree2() : untyped =
     Something_module.Three_module.Three_hello()
 
-template something2(a : One2) : untyped =
+template something2(a : SomethingElse_module.One_export) : untyped =
     SomethingElse_module.SomethingElse_something(a)
 
-template something2(a : Two2) : untyped =
+template something2(a : SomethingElse_module.Two_export) : untyped =
     SomethingElse_module.SomethingElse_something(a)
+
+template somethingThree2(a : SomethingElse_module.Three_export) : untyped =
+    SomethingElse_module.Two_something(a)
 
 #One1()
 let a = when declared(One1_new_struct_inner):
@@ -115,6 +123,20 @@ let f = when declared(Three2_new_struct_inner):
 proc hello*() =
     echo "hello - CompileMe_Proof"
 
+proc hello*(one1 : One1) =
+    echo "hello One1"
+
+proc hello*(one2 : One2) =
+    echo "hello One2"
+
+#Can't do Two1 and Two2, they are the same object!
+proc hello*(two : Two) =
+    echo "hello Two"
+
+#Can't do Three1 and Three2, they are the same object!
+proc hello*(three : Three) =
+    echo "hello Three"
+
 #a and b are two different types, can use something directly
 a.something()
 b.something()
@@ -123,12 +145,22 @@ b.something()
 a.something1()
 b.something2()
 
-#c and d are the same type, need to import different def too!
-c.something()
-d.something()
+#c and d are the same type, but two different something are defined for them
+c.something1()
+d.something2()
 
 e.something()
 f.something()
+
+e.somethingThree1()
+f.somethingThree2()
+
+a.hello()
+b.hello()
+c.hello()
+d.hello()
+e.hello()
+f.hello()
 
 hello1()
 helloThree1()
