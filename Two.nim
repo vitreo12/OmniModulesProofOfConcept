@@ -3,7 +3,7 @@ import generate_proc_in_module
 import Three as Three_module
 export Three_module
 
-type Two* = object of RootObj
+type Two* = object
 type Two_export* = Two #to export a different name than module...
 
 #typedesc fails here...
