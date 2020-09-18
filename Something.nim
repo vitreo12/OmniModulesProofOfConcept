@@ -1,8 +1,15 @@
 import generate_proc_in_module
 
-#use Two
-import Two as Two_module
-export Two_module
+#use Two:
+    #Two as TwoSomething
+import Two as Two_module except Two, Two_export #Whenever doing an "as", except the names
+export Two_module except Two, Two_export #Whenever doing an "as", except the names
+
+type TwoSomething* = Two_module.Two_export
+type TwoSomething_export* = TwoSomething
+
+proc TwoSomething_new_struct_inner*() : TwoSomething {.inline.} =
+    return Two_module.Two_new_struct_inner()
 
 #struct One
 type One* = object
@@ -25,7 +32,7 @@ proc something*(a : One) =
     echo "One - Something"
 
 #def something(a Two)
-proc something*(a : Two) =
+proc something*(a : TwoSomething) =
     echo "Two - Something"
 
 proc hello*() =
