@@ -1,13 +1,13 @@
 #use Something:
     #One as One1
     #TwoSomething as TwoSomething1
-    #Three as Three1
+    #ThreeYay as Three1
     #hello as hello1
     #Three.hello as helloThree1
     #something as something1
     #Two.something as somethingThree1
 
-import Something as Something_module except One, One_export, TwoSomething, TwoSomething_export, Three, Three_export
+import Something as Something_module except One, One_export, TwoSomething, TwoSomething_export, ThreeYay, ThreeYay_export
 
 type One1 = Something_module.One_export
 
@@ -22,7 +22,7 @@ proc TwoSomething1_new_struct_inner() : TwoSomething1 {.inline.} =
     return Something_module.TwoSomething_new_struct_inner()
 
 #type Three1 = Something_module.Two_module.Three_export 
-type Three1 = Something_module.Three_export
+type Three1 = Something_module.ThreeYay_export
 
 #Use proc for name mangling in typedToUntyped
 proc Three1_new_struct_inner() : Three1 {.inline.} =
@@ -41,19 +41,19 @@ template something1(a : Something_module.One_export) : untyped =
 template something1(a : Something_module.TwoSomething_export) : untyped =
     Something_module.OmniDef_Something_something(a)
 
-template somethingThree1(a : Something_module.Three_export) : untyped =
+template somethingThree1(a : Something_module.ThreeYay_export) : untyped =
     Something_module.OmniDef_Two_something(a)
 
 #use SomethingElse:
     #One as One2
     #TwoSomething as TwoSomething2
-    #Three as Three2
+    #ThreeYay as Three2
     #hello as hello2
     #Three.hello as helloThree2
     #something as something2
     #Two.something as somethingThree2
 
-import SomethingElse as SomethingElse_module except One, One_export, TwoSomething, TwoSomething_export, Three, Three_export
+import SomethingElse as SomethingElse_module except One, One_export, TwoSomething, TwoSomething_export, ThreeYay, ThreeYay_export
 
 type One2 = SomethingElse_module.One_export
 
@@ -68,7 +68,7 @@ proc TwoSomething2_new_struct_inner() : TwoSomething2 {.inline.} =
     return SomethingElse_module.TwoSomething_new_struct_inner()
 
 #type Three2 = Something_module.Two_module.Three_export 
-type Three2 = Something_module.Three_export
+type Three2 = Something_module.ThreeYay_export
 
 #Use proc for name mangling in typedToUntyped
 proc Three2_new_struct_inner() : Three2 {.inline.} =
@@ -87,7 +87,7 @@ template something2(a : SomethingElse_module.One_export) : untyped =
 template something2(a : SomethingElse_module.TwoSomething_export) : untyped =
     SomethingElse_module.OmniDef_SomethingElse_something(a)
 
-template somethingThree2(a : SomethingElse_module.Three_export) : untyped =
+template somethingThree2(a : SomethingElse_module.ThreeYay_export) : untyped =
     SomethingElse_module.OmniDef_Two_something(a)
 
 
