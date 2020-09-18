@@ -124,8 +124,8 @@ a.something1()
 b.something2()
 
 #c and d are the same type, need to import different def too!
-c.something1()
-d.something2()
+c.something()
+d.something()
 
 e.something()
 f.something()
