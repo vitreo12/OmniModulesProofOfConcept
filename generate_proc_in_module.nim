@@ -5,7 +5,7 @@ proc generate_proc_in_module_inner(proc_in : NimNode, current_module : NimNode) 
     var proc_def = proc_in.getImpl()
     proc_def[0] = nnkPostfix.newTree(
         newIdentNode("*"),
-        newIdentNode("OmniModule_" & current_module.strVal() & "_" & proc_in.strVal())
+        newIdentNode("OmniDef_" & current_module.strVal() & "_" & proc_in.strVal())
     )
     
     return proc_def

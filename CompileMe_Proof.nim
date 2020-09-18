@@ -30,19 +30,19 @@ proc Three1_new_struct_inner() : Three1 {.inline.} =
     return Something_module.Three_new_struct_inner()
 
 template hello1() : untyped =
-    Something_module.OmniModule_Something_hello()
+    Something_module.OmniDef_Something_hello()
 
 template helloThree1() : untyped =
-    Something_module.Three_module.OmniModule_Three_hello()
+    Something_module.Three_module.OmniDef_Three_hello()
 
 template something1(a : Something_module.One_export) : untyped =
-    Something_module.OmniModule_Something_something(a)
+    Something_module.OmniDef_Something_something(a)
 
 template something1(a : Something_module.TwoSomething_export) : untyped =
-    Something_module.OmniModule_Something_something(a)
+    Something_module.OmniDef_Something_something(a)
 
 template somethingThree1(a : Something_module.Three_export) : untyped =
-    Something_module.OmniModule_Two_something(a)
+    Something_module.OmniDef_Two_something(a)
 
 #use SomethingElse:
     #One as One2
@@ -76,19 +76,19 @@ proc Three2_new_struct_inner() : Three2 {.inline.} =
     return Something_module.Three_new_struct_inner()
 
 template hello2() : untyped =
-    SomethingElse_module.OmniModule_SomethingElse_hello()
+    SomethingElse_module.OmniDef_SomethingElse_hello()
 
 template helloThree2() : untyped =
-    Something_module.Three_module.OmniModule_Three_hello()
+    Something_module.Three_module.OmniDef_Three_hello()
 
 template something2(a : SomethingElse_module.One_export) : untyped =
-    SomethingElse_module.OmniModule_SomethingElse_something(a)
+    SomethingElse_module.OmniDef_SomethingElse_something(a)
 
 template something2(a : SomethingElse_module.TwoSomething_export) : untyped =
-    SomethingElse_module.OmniModule_SomethingElse_something(a)
+    SomethingElse_module.OmniDef_SomethingElse_something(a)
 
 template somethingThree2(a : SomethingElse_module.Three_export) : untyped =
-    SomethingElse_module.OmniModule_Two_something(a)
+    SomethingElse_module.OmniDef_Two_something(a)
 
 
 
