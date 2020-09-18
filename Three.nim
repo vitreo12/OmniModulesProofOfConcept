@@ -1,4 +1,4 @@
-import generate_proc_in_module, macros
+import generate_proc_in_module
 
 type Three* = object
 type Three_export* = Three #to export a different name than module...

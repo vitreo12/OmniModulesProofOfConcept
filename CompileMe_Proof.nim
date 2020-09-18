@@ -1,9 +1,9 @@
 #use Something:
     #One as One1
     #Two as Two1
-    #Two.Three as Three1   #equivalent to Three as Three1
+    #Three as Three1   #equivalent to Three as Three1
     #hello as hello1
-    #Three.hello as helloThree
+    #Three.hello as helloThree1
     #something as something1
 
 import Something as Something_module
@@ -25,23 +25,25 @@ template Three1_new_struct_inner() : Three1 =
     #Something_module.Two_module.Three_new_struct_inner()
     Something_module.Three_new_struct_inner()
 
+template hello1() : untyped =
+    Something_module.Something_hello()
+
+template helloThree1() : untyped =
+    Something_module.Three_module.Three_hello()
+
 template something1(a : One1) : untyped =
     Something_module.Something_something(a)
 
 template something1(a : Two1) : untyped =
     Something_module.Something_something(a)
 
-template hello1() : untyped =
-    Something_module.Something_hello()
-
-template helloThree() : untyped =
-    Something_module.Three_module.Three_hello()
-
 #use SomethingElse:
     #One as One2
     #Two as Two2
-    #something as something2
+    #Three as Three2
     #hello as hello2
+    #Three.hello as helloThree2
+    #something as something2
 
 import SomethingElse as SomethingElse_module
 
@@ -55,14 +57,24 @@ type Two2 = SomethingElse_module.Two_export
 template Two2_new_struct_inner() : Two2 =
     SomethingElse_module.Two_new_struct_inner()
 
+#type Three2 = Something_module.Two_module.Three_export 
+type Three2 = Something_module.Three_export
+
+template Three2_new_struct_inner() : Three2 =
+    #Something_module.Two_module.Three_new_struct_inner()
+    Something_module.Three_new_struct_inner()
+
+template hello2() : untyped =
+    SomethingElse_module.SomethingElse_hello()
+
+template helloThree2() : untyped =
+    Something_module.Three_module.Three_hello()
+
 template something2(a : One2) : untyped =
     SomethingElse_module.SomethingElse_something(a)
 
 template something2(a : Two2) : untyped =
     SomethingElse_module.SomethingElse_something(a)
-
-template hello2() : untyped =
-    SomethingElse_module.SomethingElse_hello()
 
 #One1()
 let a = when declared(One1_new_struct_inner):
@@ -94,6 +106,15 @@ let e = when declared(Three1_new_struct_inner):
     else:
         new_struct_inner(Three1)
 
+#Three2()
+let f = when declared(Three2_new_struct_inner):
+        Three2_new_struct_inner()
+    else:
+        new_struct_inner(Three2)
+
+proc hello*() =
+    echo "hello - CompileMe_Proof"
+
 #a and b are two different types, can use something directly
 a.something()
 b.something()
@@ -107,7 +128,12 @@ c.something1()
 d.something2()
 
 e.something()
+f.something()
 
 hello1()
-helloThree()
+helloThree1()
 hello2()
+helloThree2()
+
+#Will use the one in current module, no probs here
+hello()
