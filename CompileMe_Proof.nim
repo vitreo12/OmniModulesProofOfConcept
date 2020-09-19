@@ -91,6 +91,11 @@ template somethingThree2(a : SomethingElse_module.ThreeYay_export) : untyped =
     SomethingElse_module.OmniDef_Two_something(a)
 
 
+type Three* = object
+type Three_export* = object
+
+proc Three_new_struct_inner*() : Three {.inline.} =
+    return Three()
 
 proc hello*() =
     echo "hello - CompileMe_Proof"
@@ -103,12 +108,15 @@ proc hello*(one2 : One2) =
 
 #Can't do Two1 and Two2, they are the same object!
 proc hello*(two : TwoSomething1) =
-    echo "hello Two"
+    echo "hello Two1 or Two2"
 
 #Can't do Three1 and Three2, they are the same object!
 proc hello*(three : Three2) =
-    echo "hello Three"
+    echo "hello Three1 or Three2"
 
+#This applies to Three defined in this module!
+proc hello*(three : Three) =
+    echo "hello Three CompileMe_Proof"
 
 
 import macros
@@ -123,40 +131,25 @@ macro typedToUntyped(code_block : typed) : untyped =
     
 typedToUntyped:
     #One1()
-    let a = when declared(One1_new_struct_inner):
-            One1_new_struct_inner()
-        else:
-            new_struct_inner(One1)
+    let a = One1_new_struct_inner()
 
     #One2()
-    let b = when declared(One2_new_struct_inner):
-            One2_new_struct_inner()
-        else:
-            new_struct_inner(One2)
+    let b = One2_new_struct_inner()
 
     #Two1()
-    let c = when declared(TwoSomething1_new_struct_inner):
-            TwoSomething1_new_struct_inner()
-        else:
-            new_struct_inner(Two1)
+    let c = TwoSomething1_new_struct_inner()
 
-    #Two2()
-    var d = when declared(TwoSomething2_new_struct_inner):
-            TwoSomething2_new_struct_inner()
-        else:
-            new_struct_inner(Two2)
+    #TwoSomething2()
+    var d = TwoSomething2_new_struct_inner()
 
     #Three1()
-    let e = when declared(Three1_new_struct_inner):
-            Three1_new_struct_inner()
-        else:
-            new_struct_inner(Three1)
+    let e = Three1_new_struct_inner()
 
     #Three2()
-    let f = when declared(Three2_new_struct_inner):
-            Three2_new_struct_inner()
-        else:
-            new_struct_inner(Three2)
+    let f = Three2_new_struct_inner()
+
+    #Three()
+    let g = Three_new_struct_inner()
 
     #a and b are two different types, can use something directly
     #Or something1 and something2 to be more precise
@@ -181,6 +174,7 @@ typedToUntyped:
     d.hello()
     e.hello()
     f.hello()
+    g.hello()
 
     hello1()
     helloThree1()
