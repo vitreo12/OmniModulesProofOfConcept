@@ -91,11 +91,11 @@ template somethingThree2(a : SomethingElse_module.ThreeYay_export) : untyped =
     SomethingElse_module.OmniDef_Two_something(a)
 
 
-type Three* = object
-type Three_export* = object
+type ThreeYay* = object
+type ThreeYay_export* = object
 
-proc Three_new_struct_inner*() : Three {.inline.} =
-    return Three()
+proc ThreeYay_new_struct_inner*() : ThreeYay {.inline.} =
+    return ThreeYay()
 
 proc hello*() =
     echo "hello - CompileMe_Proof"
@@ -115,7 +115,7 @@ proc hello*(three : Three2) =
     echo "hello Three1 or Three2"
 
 #This applies to Three defined in this module!
-proc hello*(three : Three) =
+proc hello*(three : ThreeYay) =
     echo "hello Three CompileMe_Proof"
 
 
