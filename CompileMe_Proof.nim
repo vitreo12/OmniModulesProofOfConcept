@@ -131,25 +131,46 @@ macro typedToUntyped(code_block : typed) : untyped =
     
 typedToUntyped:
     #One1()
-    let a = One1_new_struct_inner()
+    let a = when declared(One1_new_struct_inner):
+            One1_new_struct_inner()
+        else:
+            One1()
 
     #One2()
-    let b = One2_new_struct_inner()
+    let b = when declared(One2_new_struct_inner):
+            One2_new_struct_inner()
+        else:
+            One2()
 
-    #Two1()
-    let c = TwoSomething1_new_struct_inner()
+    #TwoSomething1()
+    let c = when declared(TwoSomething1_new_struct_inner):
+            TwoSomething1_new_struct_inner()
+        else:
+            TwoSomething1()
 
     #TwoSomething2()
-    var d = TwoSomething2_new_struct_inner()
+    var d = when declared(TwoSomething2_new_struct_inner):
+            TwoSomething2_new_struct_inner()
+        else:
+            TwoSomething2()
 
     #Three1()
-    let e = Three1_new_struct_inner()
+    let e = when declared(Three1_new_struct_inner):
+            Three1_new_struct_inner()
+        else:
+            Three1()
 
     #Three2()
-    let f = Three2_new_struct_inner()
+    let f = when declared(Three2_new_struct_inner):
+            Three2_new_struct_inner()
+        else:
+            Three2()
 
     #Three()
-    let g = Three_new_struct_inner()
+    let g = when declared(Three_new_struct_inner):
+            Three_new_struct_inner()
+        else:
+            Three()
 
     #a and b are two different types, can use something directly
     #Or something1 and something2 to be more precise
