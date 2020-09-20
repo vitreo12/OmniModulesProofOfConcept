@@ -22,11 +22,11 @@ proc One_new_struct_inner*() : One =
 proc new_struct_inner*(obj_type : typedesc[One]) : One =
     return One()
 
-#just used to have a sym to run .owner on for comparison
-proc check_module() =
-    discard
-
 #def something(a : One)
+when not declared(check_module):
+    proc check_module() =
+        discard
+
 proc something_def_inner*(a : One) =
     echo "One - SomethingElse"
 
@@ -34,6 +34,10 @@ template something*(a : One) =
     something_def_inner(a)
 
 #def something(a : TwoSomething)
+when not declared(check_module):
+    proc check_module() =
+        discard
+
 proc something_def_inner*(a : TwoSomething) =
     echo "Two - SomethingElse"
 
@@ -41,6 +45,10 @@ template something*(a : TwoSomething) =
     something_def_inner(a)
 
 #def hello()
+when not declared(check_module):
+    proc check_module() =
+        discard
+
 proc hello_def_inner*() =
     echo "hello - SomethingElse"
 

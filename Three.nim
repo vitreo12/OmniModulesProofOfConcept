@@ -10,8 +10,9 @@ proc Three_new_struct_inner*() : Three =
     return Three()
 
 #just used to have a sym to run .owner on for comparison
-proc check_module() =
-    discard
+when not declared(check_module):
+    proc check_module() =
+        discard
 
 #def hello()
 proc hello_def_inner*() =

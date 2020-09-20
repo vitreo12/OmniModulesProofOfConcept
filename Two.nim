@@ -18,11 +18,11 @@ type Two_export* = Two #to export a different name than module...
 proc Two_new_struct_inner*() : Two =
     return Two()
 
-#just used to have a sym to run .owner on for comparison
-proc check_module() =
-    discard
-
 #def something(a ThreeYay)
+when not declared(check_module):
+    proc check_module() =
+        discard
+
 proc something_def_inner*(a : ThreeYay) =
     echo "Two - Three"
 
