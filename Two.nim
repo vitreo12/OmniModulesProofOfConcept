@@ -22,9 +22,13 @@ proc Two_new_struct_inner*() : Two =
 proc check_module() =
     discard
 
-proc something*(a : ThreeYay) =
+#def something(a ThreeYay)
+proc something_def_inner*(a : ThreeYay) =
     echo "Two - Three"
 
+template something*(a : ThreeYay) =
+    something_def_inner(a)
+
 expandMacros:
-    generate_proc_in_module(something, check_module)
+    generate_proc_in_module(something_def_inner, check_module)
     generate_proc_in_module(hello, check_module) #Nothing gets generated for hello, not defined in current module!

@@ -26,15 +26,27 @@ proc new_struct_inner*(obj_type : typedesc[One]) : One =
 proc check_module() =
     discard
 
-proc something*(a : One) =
+#def something(a : One)
+proc something_def_inner*(a : One) =
     echo "One - SomethingElse"
 
-proc something*(a : TwoSomething) =
+template something*(a : One) =
+    something_def_inner(a)
+
+#def something(a : TwoSomething)
+proc something_def_inner*(a : TwoSomething) =
     echo "Two - SomethingElse"
 
-proc hello*() =
+template something*(a : TwoSomething) =
+    something_def_inner(a)
+
+#def hello()
+proc hello_def_inner*() =
     echo "hello - SomethingElse"
 
+template hello*() =
+    hello_def_inner()
+
 expandMacros:
-    generate_proc_in_module(something, check_module)
-    generate_proc_in_module(hello, check_module)
+    generate_proc_in_module(something_def_inner, check_module)
+    generate_proc_in_module(hello_def_inner, check_module)

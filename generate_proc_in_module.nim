@@ -1,13 +1,19 @@
 import macros
 export macros
 
+import strutils
+
 proc generate_proc_in_module_inner(proc_in : NimNode, current_module : NimNode) : NimNode {.compileTime.} =
+    var proc_in_name = proc_in.strVal()
+    if proc_in_name.endsWith("_def_inner"):
+        proc_in_name = proc_in_name[0..^11] #remove _def_inner
+
     var proc_def = proc_in.getImpl()
     proc_def[0] = nnkPostfix.newTree(
         newIdentNode("*"),
-        newIdentNode("OmniDef_" & current_module.strVal() & "_" & proc_in.strVal())
+        newIdentNode("OmniDef_" & current_module.strVal() & "_" & proc_in_name)
     )
-    
+
     return proc_def
 
 macro generate_proc_in_module*(proc_in : typed, check_module : typed) =

@@ -13,8 +13,12 @@ proc Three_new_struct_inner*() : Three =
 proc check_module() =
     discard
 
-proc hello*() =
+#def hello()
+proc hello_def_inner*() =
     echo "hello - Three"
 
+template hello*() =
+    hello_def_inner()
+
 expandMacros:
-    generate_proc_in_module(hello, check_module)
+    generate_proc_in_module(hello_def_inner, check_module)
