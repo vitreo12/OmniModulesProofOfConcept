@@ -19,10 +19,6 @@ type One_export* = One
 proc One_new_struct_inner*() : One =
     return One()
 
-#The one used internally
-proc new_struct_inner*(obj_type : typedesc[One]) : One =
-    return One()
-
 #def something(a One)
 when not declared(check_module):
     proc check_module() =
@@ -49,7 +45,7 @@ template something*(a : TwoSomething) =
 when not declared(check_module):
     proc check_module() =
         discard
-    
+
 proc hello_def_inner*() =
     echo "hello - Something"
 

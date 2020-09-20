@@ -1,11 +1,9 @@
 import generate_proc_in_module
 
-type Three = object
-type Three_export = Three #to export a different name than module...
+#struct Three
+type Three* = object
+type Three_export* = Three #to export a different name than module...
 
-export Three, Three_export
-
-#typedesc fails here...
 proc Three_new_struct_inner*() : Three =
     return Three()
 

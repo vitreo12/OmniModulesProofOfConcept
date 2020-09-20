@@ -11,10 +11,10 @@ type ThreeYay_export* = ThreeYay
 proc ThreeYay_new_struct_inner*() : ThreeYay {.inline.} =
     return Three_module.Three_new_struct_inner()
 
+#struct Two
 type Two* = object
 type Two_export* = Two #to export a different name than module...
 
-#typedesc fails here...
 proc Two_new_struct_inner*() : Two =
     return Two()
 
