@@ -15,8 +15,11 @@ proc TwoSomething_new_struct_inner*() : TwoSomething {.inline.} =
 type One* = object
 type One_export* = One
 
-proc One_new_struct_inner*() : One =
+proc One_new_struct_inner*(a : typedesc[One_export]) : One =
     return One()
+
+proc checkValidity*(obj : One) =
+    echo "checkValidity - One - SomethingElse"
 
 #def something(a : One)
 when not declared(check_module):

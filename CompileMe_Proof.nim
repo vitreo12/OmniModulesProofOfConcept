@@ -10,10 +10,11 @@
 import Something as Something_module except One, One_export, TwoSomething, TwoSomething_export, ThreeYay, ThreeYay_export
 
 type One1 = Something_module.One_export
+type One1_export = One1
 
 #Use proc for name mangling in typedToUntyped
-proc One1_new_struct_inner() : One1 {.inline.} =
-    return Something_module.One_new_struct_inner()
+proc One1_new_struct_inner(a : typedesc[One1_export]) : One1 {.inline.} =
+    return Something_module.One_new_struct_inner(a)
 
 type TwoSomething1 = Something_module.TwoSomething_export
 
@@ -56,10 +57,11 @@ template somethingThree1(a : Something_module.ThreeYay_export) : untyped =
 import SomethingElse as SomethingElse_module except One, One_export, TwoSomething, TwoSomething_export, ThreeYay, ThreeYay_export
 
 type One2 = SomethingElse_module.One_export
+type One2_export = One2
 
 #Use proc for name mangling in typedToUntyped
-proc One2_new_struct_inner() : One2 {.inline.} =
-    return SomethingElse_module.One_new_struct_inner()
+proc One2_new_struct_inner(a : typedesc[One2_export]) : One2 {.inline.} =
+    return SomethingElse_module.One_new_struct_inner(a)
 
 type TwoSomething2 = SomethingElse_module.TwoSomething_export
 
@@ -132,13 +134,13 @@ macro typedToUntyped(code_block : typed) : untyped =
 typedToUntyped:
     #One1()
     let a = when declared(One1_new_struct_inner):
-            One1_new_struct_inner()
+            One1_new_struct_inner(One1)
         else:
             One1()
 
     #One2()
     let b = when declared(One2_new_struct_inner):
-            One2_new_struct_inner()
+            One2_new_struct_inner(One2)
         else:
             One2()
 
@@ -171,6 +173,13 @@ typedToUntyped:
             Three_new_struct_inner()
         else:
             Three()
+
+    a.checkValidity()
+    b.checkValidity()
+    c.checkValidity()
+    d.checkValidity()
+    e.checkValidity()
+    f.checkValidity()
 
     #a and b are two different types, can use something directly
     #Or something1 and something2 to be more precise

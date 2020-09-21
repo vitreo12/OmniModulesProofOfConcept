@@ -18,6 +18,9 @@ type Two_export* = Two #to export a different name than module...
 proc Two_new_struct_inner*() : Two =
     return Two()
 
+proc checkValidity*(obj : Two) = 
+    echo "checkValidity - Two"
+
 #def something(a ThreeYay)
 when not declared(check_module):
     proc check_module() =
